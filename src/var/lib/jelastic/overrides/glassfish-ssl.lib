@@ -1,0 +1,23 @@
+#!/bin/bash
+[ -n "${GLASSFISHSSLLIBOV_VERSION:-}" ] && return 0;
+GLASSFISHSSLLIBOV_VERSION="0.1";
+
+LEGACY_LIB="/usr/lib/jelastic/libs/glassfish-ssl.lib";
+sed -i 's/--target gfcluster//g' $LEGACY_LIB;
+
+inherit glassfish-ssl;
+
+
+_ASADMIN="$APP_PATH/bin/asadmin";
+GF_KEYSTORE="$APP_PATH/glassfish/domains/domain1/config/keystore.jks";
+GF_KEYSTORE_ORIG="$APP_PATH/glassfish/domains/domain1/config/keystore.jks.orig";
+DAS_MAIN_CONFIG="$APP_PATH/glassfish/domains/domain1/config/domain.xml";
+PASS_FILE="$APP_PATH/home/glassfishpwd";
+ADMIN_USER="admin";
+
+function runAsadminCmd(){
+    local cmd=$@;
+    [ -f "$PASS_FILE" ] && {
+	    $_ASADMIN -u "$ADMIN_USER" -W "$PASS_FILE" ${cmd}  >> $ACTIONS_LOG 2>&1;
+    } || { exit 2; };
+}

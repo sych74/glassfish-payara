@@ -1,0 +1,8 @@
+#!/bin/bash 
+[ -f /.jelenv ] && . /.jelenv
+
+[ $UID -eq 0 ] && {
+    su - $APP_USER -c "$APP_PATH/home/start.sh $1"
+} || {
+    $APP_PATH/home/start.sh $1
+}

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Simple deploy and undeploy scenarios for Glassfish4
+
+AS_ADMIN="$APP_PATH/bin/asadmin";
+PASS_FILE="$APP_PATH/home/glassfishpwd";
+ADMIN_USER="admin";
+include output;
+
+function runAsadminCmd(){
+        local cmd=$@;
+        [ -f $PASS_FILE ] && {
+                $AS_ADMIN -u $ADMIN_USER -W $PASS_FILE $cmd >> $ACTIONS_LOG 2>&1;
+                local result=$?;
+                return $result;
+        } || { $AS_ADMIN $cmd > /dev/null 2>&1; };
+}
+
+function deploy(){
+     [ "x${context}" == "xROOT" ] && deploy_context="/" || deploy_context=$context;
+     [ -f "${WEBROOT}/${context}.war" ] &&  rm -f "${WEBROOT}/${context}.war";
+     $WGET --no-check-certificate --content-disposition -O "/tmp/${context}.war" "$package_url" >> $ACTIONS_LOG 2>&1;
+     runAsadminCmd  deploy --force   --contextroot "$deploy_context" "/tmp/${context}.war" >> $ACTIONS_LOG 2>&1;
+     local result=$?;
+     [ -f "/tmp/${context}.war" ] && rm "/tmp/${context}.war";
+     return $result;
+}
+
+function undeploy(){
+     #[ "x${context}" == "xROOT" ] && context="/";
+     runAsadminCmd  undeploy   "$context"  >> $ACTIONS_LOG 2>&1;
+}
+

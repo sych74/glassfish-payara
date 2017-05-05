@@ -1,0 +1,30 @@
+case ${COMPUTE_TYPE} in
+glassfish)
+        APP_PATH='/opt/glassfish';
+        DATA_OWNER='glassfish:glassfish';
+        SERVICE='glassfish-domain1';
+        deploy_module_inherit="glassfish-deploy";
+        engine_module_inherit="java-common-engine";
+        replication_module_inherit="glassfish-replication";
+        ssl_module_inherit="glassfish-ssl";
+        glassfish_tools="/usr/bin/perl /usr/lib/jelastic/libs/glassfish-tools.lib";
+        extipchange_module_inherit="glassfish-extipch";
+        passwd_module_inherit="glassfish-passwd";
+        default_user="admin";
+;;
+payara)
+        APP_PATH='/opt/payara';
+        DATA_OWNER='payara:payara';
+        SERVICE='glassfish-domain1';
+        deploy_module_inherit="glassfish-deploy";
+        engine_module_inherit="java-common-engine";
+        replication_module_inherit="glassfish-replication";
+        ssl_module_inherit="glassfish-ssl";
+        extipchange_module_inherit="glassfish-extipch";
+        passwd_module_inherit="glassfish-passwd";
+        default_user="admin";
+;;
+
+esac
+
+
