@@ -1,5 +1,6 @@
 # FROM java:8-jdk
-FROM devbeta/java-openjdk:openjdk-1.8.0
+#FROM devbeta/java-openjdk:openjdk-1.8.0
+FROM devbeta/jdk:1.8.0_102
 MAINTAINER "info@jelastic.com"
 
 # ENV or ARG?
