@@ -12,10 +12,8 @@ MAINTAINER "info@jelastic.com"
 #ARG APP_NAME=Payara
 
 ### -= GLASSFISH =- ###
-#ENV APP_VERSION=4.1.1
-ENV APP_VERSION=5.0-b05
-#ARG APP_URL=http://download.oracle.com/glassfish/${APP_VERSION}/release/glassfish-${APP_VERSION}.zip
-ARG APP_URL=http://download.oracle.com/glassfish/5.0/promoted/glassfish-${APP_VERSION}.zip
+ENV APP_VERSION=4.1.1
+ARG APP_URL=http://download.oracle.com/glassfish/${APP_VERSION}/release/glassfish-${APP_VERSION}.zip
 ENV APP_PATH /opt/glassfish
 ENV APP_USER glassfish
 ARG APP_NAME=GlassFish
